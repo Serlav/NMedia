@@ -88,12 +88,11 @@
         android:id="@+id/like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="@dimen/common_spacing"
         android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrier2"
-        app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
+        app:srcCompat="@drawable/ic_like" />
 
     <TextView
         android:id="@+id/numbersOfLikes"
@@ -114,7 +113,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/like"
         app:layout_constraintStart_toEndOf="@+id/numbersOfLikes"
         app:layout_constraintTop_toTopOf="@+id/like"
-        app:srcCompat="@drawable/ic_baseline_share_24" />
+        app:srcCompat="@drawable/ic_share" />
 
     <TextView
         android:id="@+id/numbersOfShared"
@@ -135,7 +134,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/like"
         app:layout_constraintEnd_toStartOf="@+id/numbersOfViews"
         app:layout_constraintTop_toTopOf="@+id/like"
-        app:srcCompat="@drawable/ic_baseline_visibility_24" />
+        app:srcCompat="@drawable/ic_views" />
 
     <TextView
         android:id="@+id/numbersOfViews"
