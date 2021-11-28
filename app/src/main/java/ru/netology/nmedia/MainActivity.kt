@@ -23,23 +23,67 @@ class MainActivity : AppCompatActivity() {
             content.text = post.content
             published.text = post.published
 
-            setLike(post)
+            initLikes(post)
+            setShare(post)
 
             like.setOnClickListener {
-                post.likedByMe = !post.likedByMe
-
                 setLike(post)
+            }
+            numbersOfLikes.setOnClickListener{
+                setLike(post)
+            }
+
+            share.setOnClickListener {
+                post.sharedByMe = !post.sharedByMe
+                setShare(post)
             }
         }
 
     }
 
-    private fun ActivityMainBinding.setLike(post: Post) {
+    private fun ActivityMainBinding.setLikeImage(post: Post) {
         like.setImageResource(
             if (post.likedByMe) {
                 R.drawable.ic_liked
             } else {
                 R.drawable.ic_like
+            }
+        )
+    }
+
+    private fun ActivityMainBinding.initLikes(post: Post) {
+        numbersOfLikes.text = formatNumbers(post.likes)
+    }
+
+
+    private fun ActivityMainBinding.setLike(post: Post) {
+        post.likedByMe = !post.likedByMe
+        setLikeImage(post)
+        if (post.likedByMe) {
+            post.likes++
+        } else {
+            post.likes--
+        }
+        numbersOfLikes.text = formatNumbers(post.likes)
+    }
+
+    private fun formatNumbers(num: Int): String {
+        return if (num < 999) {
+            num.toString()
+        } else if (num < 999_999) {
+            (num / 1000).toString() + "k"
+        } else {
+            (num / 1000000).toString() + "M"
+        }
+    }
+
+
+    private fun ActivityMainBinding.setShare(post: Post) {
+        share.setImageResource(
+            if (post.sharedByMe) {
+                R.drawable.ic_shared_24
+            } else {
+                R.drawable.ic_share
             }
         )
     }
