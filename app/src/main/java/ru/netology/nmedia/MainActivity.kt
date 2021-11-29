@@ -1,5 +1,6 @@
 package ru.netology.nmedia
 
+import android.icu.text.DecimalFormat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ru.netology.nmedia.databinding.ActivityMainBinding
@@ -24,21 +25,22 @@ class MainActivity : AppCompatActivity() {
             published.text = post.published
 
             initLikes(post)
-            setShare(post)
+            initShare(post)
 
             like.setOnClickListener {
                 setLike(post)
             }
-            numbersOfLikes.setOnClickListener{
+            numbersOfLikes.setOnClickListener {
                 setLike(post)
             }
 
             share.setOnClickListener {
-                post.sharedByMe = !post.sharedByMe
+                setShare(post)
+            }
+            numbersOfShared.setOnClickListener {
                 setShare(post)
             }
         }
-
     }
 
     private fun ActivityMainBinding.setLikeImage(post: Post) {
@@ -67,24 +69,37 @@ class MainActivity : AppCompatActivity() {
         numbersOfLikes.text = formatNumbers(post.likes)
     }
 
-    private fun formatNumbers(num: Int): String {
-        return if (num < 999) {
-            num.toString()
-        } else if (num < 999_999) {
-            (num / 1000).toString() + "k"
-        } else {
-            (num / 1000000).toString() + "M"
-        }
+
+    private fun ActivityMainBinding.initShare(post: Post) {
+        numbersOfShared.text = formatNumbers(post.share)
+        setShareImage(post)
     }
 
-
-    private fun ActivityMainBinding.setShare(post: Post) {
+    private fun ActivityMainBinding.setShareImage(post: Post) {
         share.setImageResource(
-            if (post.sharedByMe) {
+            if (post.share > 0) {
                 R.drawable.ic_shared_24
             } else {
                 R.drawable.ic_share
             }
         )
+    }
+
+    private fun ActivityMainBinding.setShare(post: Post) {
+        post.share++
+        setShareImage(post)
+        numbersOfShared.text = formatNumbers(post.share)
+    }
+
+    private fun formatNumbers(num: Int): String {
+        val dec = DecimalFormat("#.#")
+
+        return if (num <= 999) {
+            num.toString()
+        } else if (num < 999_999) {
+           dec.format(num / 1000).toString() + "k"
+        } else {
+            dec.format(num / 1_000_000).toString() + "M"
+        }
     }
 }
