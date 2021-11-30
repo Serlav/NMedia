@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity() {
         numbersOfLikes.text = formatNumbers(post.likes)
     }
 
-
     private fun ActivityMainBinding.setLike(post: Post) {
         post.likedByMe = !post.likedByMe
         setLikeImage(post)
@@ -96,10 +95,10 @@ class MainActivity : AppCompatActivity() {
 
         return if (num <= 999) {
             num.toString()
-        } else if (num < 999_999) {
-           dec.format(num / 1000).toString() + "k"
+        } else if (num <= 999_999) {
+           dec.format(num / 1000f).toString() + "k"
         } else {
-            dec.format(num / 1_000_000).toString() + "M"
+            dec.format(num / 1_000_000f).toString() + "M"
         }
     }
 }
