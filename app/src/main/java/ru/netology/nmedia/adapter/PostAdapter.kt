@@ -35,11 +35,19 @@ class PostViewHolder(
             content.text = post.content
             published.text = post.published
 
+            numbersOfLikes.text = formatNumbers(post.likes)
+
             like.setImageResource(
-                if (post.likedByMe) R.drawable.ic_liked else R.drawable.ic_like
+                if (post.likedByMe){
+                    R.drawable.ic_liked
+                    post.likes++
+                }  else {
+                    R.drawable.ic_like
+                    post.likes--
+                }
             )
 
-            numbersOfLikes.text = formatNumbers(post.likes)
+
 
 
             like.setOnClickListener {
@@ -64,7 +72,7 @@ class PostViewHolder(
 
         }
     }
-}
+    }
 
 class PostDiffItemCallBack : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean =
