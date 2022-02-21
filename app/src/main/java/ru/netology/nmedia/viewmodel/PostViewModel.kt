@@ -12,9 +12,7 @@ class PostViewModel : ViewModel() {
     fun likeById(id: Long) = repository.likeById(id)
 
 
-    fun share() {
-        repository.share()
-    }
+    fun shareById(id: Long) = repository.shareById(id)
 
     fun get(): LiveData<List<Post>> = repository.get()
 }

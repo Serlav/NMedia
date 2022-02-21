@@ -11,12 +11,13 @@ import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 
 class PostAdapter(
-    private val onPostClicked: (Post) -> Unit
+    private val onLikeClicked: (Post) -> Unit,
+    private val onShareClicked: (Post) -> Unit
 ) : ListAdapter<Post, PostViewHolder>(PostDiffItemCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, onPostClicked)
+        return PostViewHolder(binding, onLikeClicked, onShareClicked)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -26,7 +27,8 @@ class PostAdapter(
 
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val onPostClicked: (Post) -> Unit,
+    private val onLikeClicked: (Post) -> Unit,
+    private val onShareClicked: (Post) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
@@ -38,23 +40,16 @@ class PostViewHolder(
             numbersOfLikes.text = formatNumbers(post.likes)
 
             like.setImageResource(
-                if (post.likedByMe){
+                if (post.likedByMe) {
                     R.drawable.ic_liked
-                    post.likes++
-                }  else {
+                } else {
                     R.drawable.ic_like
-                    post.likes--
                 }
             )
-
-
-
-
             like.setOnClickListener {
-                onPostClicked(post)
+                onLikeClicked(post)
             }
-
-
+            numbersOfShared.text = formatNumbers(post.share)
 
             share.setImageResource(
                 if (post.share > 0) {
@@ -63,16 +58,14 @@ class PostViewHolder(
                     R.drawable.ic_share
                 }
             )
-            numbersOfShared.text = formatNumbers(post.share)
+
 
             share.setOnClickListener {
-                onPostClicked(post)
+                onShareClicked(post)
             }
-
-
         }
     }
-    }
+}
 
 class PostDiffItemCallBack : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean =

@@ -7,5 +7,5 @@ interface PostRepository {
     fun get(): LiveData<List<Post>>
     fun likeById(id: Long)
 
-    fun share()
+    fun shareById(id: Long)
 }
