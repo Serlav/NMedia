@@ -47,6 +47,11 @@ class PostViewHolder(
                 }
             )
             like.setOnClickListener {
+                if (!post.likedByMe) {
+                    post.likes++
+                } else {
+                    post.likes--
+                }
                 onLikeClicked(post)
             }
             numbersOfShared.text = formatNumbers(post.share)
@@ -58,7 +63,6 @@ class PostViewHolder(
                     R.drawable.ic_share
                 }
             )
-
 
             share.setOnClickListener {
                 onShareClicked(post)
