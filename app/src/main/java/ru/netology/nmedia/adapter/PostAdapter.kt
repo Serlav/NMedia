@@ -47,11 +47,6 @@ class PostViewHolder(
                 }
             )
             like.setOnClickListener {
-                if (!post.likedByMe) {
-                    post.likes++
-                } else {
-                    post.likes--
-                }
                 onLikeClicked(post)
             }
             numbersOfShared.text = formatNumbers(post.share)
