@@ -2,4 +2,6 @@
     <string name="app_name">NMedia</string>
     <string name="hello">Hello World!</string>
     <string name="description_post_menu">Post menu</string>
+    <string name="remove_post">Remove</string>
+    <string name="blank_content_eror">Content is blank</string>
 </resources>

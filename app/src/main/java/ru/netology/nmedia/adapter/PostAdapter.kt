@@ -3,6 +3,7 @@ package ru.netology.nmedia.adapter
 import android.icu.text.DecimalFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,12 +13,13 @@ import ru.netology.nmedia.dto.Post
 
 class PostAdapter(
     private val onLikeClicked: (Post) -> Unit,
-    private val onShareClicked: (Post) -> Unit
+    private val onShareClicked: (Post) -> Unit,
+    private val onRemoveClicked: (Post) -> Unit
 ) : ListAdapter<Post, PostViewHolder>(PostDiffItemCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, onLikeClicked, onShareClicked)
+        return PostViewHolder(binding, onLikeClicked, onShareClicked, onRemoveClicked)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -28,7 +30,8 @@ class PostAdapter(
 class PostViewHolder(
     private val binding: CardPostBinding,
     private val onLikeClicked: (Post) -> Unit,
-    private val onShareClicked: (Post) -> Unit
+    private val onShareClicked: (Post) -> Unit,
+    private val onRemoveClicked: (Post) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
@@ -46,6 +49,23 @@ class PostViewHolder(
                     R.drawable.ic_like
                 }
             )
+
+            menu.setOnClickListener {
+                PopupMenu(it.context, it).apply {
+                    inflate(R.menu.post_menu)
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.remove -> {
+                                onRemoveClicked(post)
+                                true
+                            }
+                            else -> false
+                        }
+                    }
+                    show()
+                }
+            }
+
             like.setOnClickListener {
                 onLikeClicked(post)
             }

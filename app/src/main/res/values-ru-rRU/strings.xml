@@ -3,4 +3,5 @@
     <string name="app_name">НМедиа</string>
     <string name="hello">НМедиа!</string>
     <string name="description_post_menu">Пост меню</string>
+    <string name="remove_post">Remove</string>
 </resources>
