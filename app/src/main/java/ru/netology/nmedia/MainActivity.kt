@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 if (text.isNullOrBlank()) {
                     Toast.makeText(
                         this@MainActivity,
-                        getString(R.string.blank_content_eror),
+                        getString(R.string.blank_content_error),
                         Toast.LENGTH_SHORT
                     ).show()
                     return@setOnClickListener
