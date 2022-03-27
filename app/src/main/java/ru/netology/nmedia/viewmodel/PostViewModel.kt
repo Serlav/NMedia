@@ -21,6 +21,11 @@ class PostViewModel : ViewModel() {
     val edited = MutableLiveData(empty)
 
     fun likeById(id: Long) = repository.likeById(id)
+
+    fun edit(post: Post){
+        edited.value = post
+    }
+
     fun shareById(id: Long) = repository.shareById(id)
 
     fun get(): LiveData<List<Post>> = repository.get()

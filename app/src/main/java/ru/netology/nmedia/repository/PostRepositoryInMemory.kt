@@ -41,8 +41,19 @@ class PostRepositoryInMemory : PostRepository {
         }
     }
 
-    override fun save(it: Post) {
-        posts = listOf(it.copy(id = posts.firstOrNull()?.id?.inc() ?: 0)) + posts
+    override fun save(post: Post) {
+        if (post.id == 0L) {
+            posts = listOf(post.copy(id = posts.firstOrNull()?.id?.inc() ?: 0)) + posts
+            data.value = posts
+            return
+        }
+        posts = posts.map {
+            if (it.id == post.id){
+                it.copy(content = post.content)
+            } else{
+                it
+            }
+        }
         data.value = posts
     }
 

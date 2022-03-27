@@ -11,15 +11,20 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 
+interface PostActionListener{
+    fun edit(post: Post)
+    fun like(post: Post)
+    fun remove(post: Post)
+}
+
 class PostAdapter(
-    private val onLikeClicked: (Post) -> Unit,
-    private val onShareClicked: (Post) -> Unit,
-    private val onRemoveClicked: (Post) -> Unit
-) : ListAdapter<Post, PostViewHolder>(PostDiffItemCallBack()) {
+    private val listener: PostActionListener,
+    private val onShareClicked: (Post) -> Unit
+    ) : ListAdapter<Post, PostViewHolder>(PostDiffItemCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, onLikeClicked, onShareClicked, onRemoveClicked)
+        return PostViewHolder(binding, listener, onShareClicked)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -29,10 +34,9 @@ class PostAdapter(
 
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val onLikeClicked: (Post) -> Unit,
+    private val listener: PostActionListener,
     private val onShareClicked: (Post) -> Unit,
-    private val onRemoveClicked: (Post) -> Unit
-) : RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
         with(binding) {
@@ -56,7 +60,11 @@ class PostViewHolder(
                     setOnMenuItemClickListener { item ->
                         when (item.itemId) {
                             R.id.remove -> {
-                                onRemoveClicked(post)
+                                listener.remove(post)
+                                true
+                            }
+                            R.id.edit ->{
+                                listener.edit(post)
                                 true
                             }
                             else -> false
@@ -67,7 +75,7 @@ class PostViewHolder(
             }
 
             like.setOnClickListener {
-                onLikeClicked(post)
+                listener.like(post)
             }
             numbersOfShared.text = formatNumbers(post.share)
 
