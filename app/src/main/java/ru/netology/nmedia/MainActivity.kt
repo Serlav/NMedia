@@ -28,13 +28,13 @@ class MainActivity : AppCompatActivity() {
                     viewModel.likeById(post.id)
                 }
 
+                override fun share(post: Post) {
+                    viewModel.shareById(post.id)
+                }
+
                 override fun remove(post: Post) {
                     viewModel.removeById(post.id)
-
                 }
-            },
-            onShareClicked = {
-                (viewModel.shareById(it.id))
             })
 
         binding.container.adapter = adapter
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             viewModel.edited.observe(this@MainActivity) {
-                if (it.id == 0L){
+                if (it.id == 0L) {
                     return@observe
                 }
                 content.requestFocus()

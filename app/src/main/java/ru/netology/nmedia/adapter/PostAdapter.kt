@@ -11,20 +11,20 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 
-interface PostActionListener{
+interface PostActionListener {
     fun edit(post: Post)
     fun like(post: Post)
+    fun share(post: Post)
     fun remove(post: Post)
 }
 
 class PostAdapter(
-    private val listener: PostActionListener,
-    private val onShareClicked: (Post) -> Unit
-    ) : ListAdapter<Post, PostViewHolder>(PostDiffItemCallBack()) {
+    private val listener: PostActionListener
+) : ListAdapter<Post, PostViewHolder>(PostDiffItemCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, listener, onShareClicked)
+        return PostViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -34,9 +34,8 @@ class PostAdapter(
 
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val listener: PostActionListener,
-    private val onShareClicked: (Post) -> Unit,
-    ) : RecyclerView.ViewHolder(binding.root) {
+    private val listener: PostActionListener
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
         with(binding) {
@@ -63,7 +62,7 @@ class PostViewHolder(
                                 listener.remove(post)
                                 true
                             }
-                            R.id.edit ->{
+                            R.id.edit -> {
                                 listener.edit(post)
                                 true
                             }
@@ -88,7 +87,7 @@ class PostViewHolder(
             )
 
             share.setOnClickListener {
-                onShareClicked(post)
+                listener.share(post)
             }
         }
     }
