@@ -101,7 +101,6 @@ class PostDiffItemCallBack : DiffUtil.ItemCallback<Post>() {
         oldItem == newItem
 }
 
-
 private fun formatNumbers(num: Int): String {
     val dec = DecimalFormat("#.#")
 

@@ -22,7 +22,7 @@ class PostViewModel : ViewModel() {
 
     fun likeById(id: Long) = repository.likeById(id)
 
-    fun edit(post: Post){
+    fun edit(post: Post) {
         edited.value = post
     }
 
