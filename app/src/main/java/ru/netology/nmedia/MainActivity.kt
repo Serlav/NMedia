@@ -76,8 +76,11 @@ class MainActivity : AppCompatActivity() {
             viewModel.edited.observe(this@MainActivity) {
                 if (it.id == 0L) {
                     return@observe
+                } else {
+                    group.visibility = View.VISIBLE
+
                 }
-                group.visibility = View.VISIBLE
+                //group.visibility = View.VISIBLE
                 content.requestFocus()
                 content.setText(it.content)
             }
