@@ -43,15 +43,9 @@ class PostViewHolder(
             content.text = post.content
             published.text = post.published
 
-            numbersOfLikes.text = formatNumbers(post.likes)
+            like.text = formatNumbers(post.likes)
 
-            like.setImageResource(
-                if (post.likedByMe) {
-                    R.drawable.ic_liked
-                } else {
-                    R.drawable.ic_like
-                }
-            )
+            like.isChecked = post.likedByMe
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -72,19 +66,10 @@ class PostViewHolder(
                     show()
                 }
             }
-
             like.setOnClickListener {
                 listener.like(post)
             }
-            numbersOfShared.text = formatNumbers(post.share)
-
-            share.setImageResource(
-                if (post.share > 0) {
-                    R.drawable.ic_shared_24
-                } else {
-                    R.drawable.ic_share
-                }
-            )
+            share.text = formatNumbers(post.share)
 
             share.setOnClickListener {
                 listener.share(post)
