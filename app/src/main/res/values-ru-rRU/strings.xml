@@ -5,4 +5,5 @@
     <string name="description_post_menu">Пост меню</string>
     <string name="remove_post">Remove</string>
     <string name="edit_post">Edit</string>
+    <string name="add_post">Add Post</string>
 </resources>
