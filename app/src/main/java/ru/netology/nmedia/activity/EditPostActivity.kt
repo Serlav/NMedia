@@ -3,16 +3,16 @@ package ru.netology.nmedia.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import ru.netology.nmedia.databinding.ActivityNewPostBinding
+import ru.netology.nmedia.databinding.ActivityEditPostBinding
 
-class NewPostActivity : AppCompatActivity() {
+class EditPostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityNewPostBinding.inflate(layoutInflater)
+        val binding = ActivityEditPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.ok.setOnClickListener {
             val intent = Intent()
-            val text = binding.edit.text
+            val text = binding.contentNew.text
             if (text.isNullOrBlank()) {
                 setResult(RESULT_CANCELED, intent)
             } else {
